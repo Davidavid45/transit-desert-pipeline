@@ -1,0 +1,112 @@
+# Transit Desert Analysis Configuration
+# City: Baltimore, MD
+# Modify these parameters to analyze a different city
+
+study_area:
+  name: "Baltimore City"
+  state_fips: "24"        # Maryland
+  county_fips: "510"      # Baltimore City (independent city)
+  full_fips: "24510"
+  crs_projected: "EPSG:2248"   # Maryland State Plane (feet)
+  crs_geographic: "EPSG:4326"
+
+# City information for visualization
+city:
+  name: "Baltimore"
+  state: "Maryland"
+
+# Neighborhood labeling settings for maps
+neighborhoods:
+  # Enable/disable neighborhood labels on maps
+  enable: false  # Now uses admin boundaries which are more reliable
+  
+  # Source: 'osm' (OpenStreetMap auto-download) or 'manual' (from file)
+  source: 'osm'
+  
+  # OSM settings (only used if source='osm')
+  osm:
+    feature_type: 'suburb'  # Options: 'suburb', 'neighbourhood', 'quarter'
+    min_population: 1000    # Minimum population to include
+  
+  # Manual file path (only used if source='manual')
+  # manual_file: "data/neighborhoods.json"
+
+
+gtfs:
+  # SEPTA GTFS feed
+  url: "https://transportation.baltimorecity.gov/files/googletransitzip"
+  # Alternative: Transitland feed ID
+  transitland_feed_id: "f-dq-mtamaryland~bus"
+  # Service date for analysis (typical weekday)
+  analysis_date: "20251015"  # Update to a valid service date in your GTFS
+  merge_feeds: false
+  preferred_feed: "bus"   # "bus" or "rail"
+  
+  # Time windows for frequency analysis (24-hour format)
+  time_windows:
+    am_peak:
+      start: "06:00:00"
+      end: "09:00:00"
+    midday:
+      start: "10:00:00"
+      end: "15:00:00"
+    pm_peak:
+      start: "16:00:00"
+      end: "19:00:00"
+    evening:
+      start: "19:00:00"
+      end: "22:00:00"
+
+spatial:
+  # Spatial unit for analysis
+  unit: "tract"  # Options: "tract", "block_group"
+  crs_projected: "EPSG:2248"     # REQUIRED by Step 02
+  crs_geographic: "EPSG:4326"    # Optional, but good practice
+  # Buffer distances for walking access (meters)
+  buffer_bus: 400      # ~1/4 mile for bus stops
+  buffer_rail: 800     # ~1/2 mile for rail stations
+  
+  # Welch connectivity decay parameter
+  decay_beta: 0.002    # per meter
+
+census:
+  # ACS 5-year estimates year
+  acs_year: 2022
+  
+  # Variables for Transit Dependency Index (TDI)
+  # Table B08201: Household Size by Vehicles Available
+  # Table B17001: Poverty Status
+  # Table B03002: Hispanic or Latino Origin by Race
+  # Table B01001: Sex by Age
+  
+  tdi_weights:
+    zero_vehicle: 0.35    # Zero-vehicle households
+    poverty: 0.25         # Below poverty line
+    minority: 0.20        # Non-white population
+    elderly: 0.20         # Age 65+
+
+accessibility:
+  # Travel time threshold for job accessibility (minutes)
+  travel_time_threshold: 45
+  
+  # LODES data year
+  lodes_year: 2021
+  
+  # Job types to include (WAC = Workplace Area Characteristics)
+  job_segments: ["C000"]  # C000 = Total jobs
+
+paths:
+  processed_dir: "data/processed"
+  figures_dir: "outputs/figures"
+  deserts_gpkg: "data/processed/transit_deserts.gpkg"
+  deserts_csv: "data/processed/transit_deserts.csv"
+
+outputs:
+  # Output file formats
+  shapefile: true
+  geojson: true
+  csv: true
+  
+  # Map settings
+  map_dpi: 300
+  map_figsize: [12, 10]

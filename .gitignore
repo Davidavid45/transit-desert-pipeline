@@ -1,0 +1,52 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+.venv/
+ENV/
+*.egg-info/
+dist/
+build/
+
+# Jupyter Notebook
+.ipynb_checkpoints
+*.ipynb_checkpoints/
+
+# Data files (too large for git)
+data/raw/**
+data/processed/**
+data/external/**
+!data/raw/.gitkeep
+!data/processed/.gitkeep
+!data/external/.gitkeep
+
+# Output files
+outputs/maps/**
+outputs/figures/**
+outputs/tables/**
+logs/**
+!outputs/maps/.gitkeep
+!outputs/figures/.gitkeep
+!outputs/tables/.gitkeep
+!logs/.gitkeep
+
+# R5 files (large travel time routing library)
+*.jar
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Config backups
+*.yaml.bak
+*.yml.bak
