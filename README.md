@@ -1,3 +1,5 @@
+> **This repository is superseded by [transit-desert-pipeline-extended](https://github.com/Davidavid45/transit-desert-pipeline-extended).** Please use and cite that version. This repository is kept for reference and is no longer maintained.
+
 # Transit Desert Identification Pipeline
 
 A reproducible geospatial framework for equity-focused transit service gap analysis.
